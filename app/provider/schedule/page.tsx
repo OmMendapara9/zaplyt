@@ -9,7 +9,8 @@ interface Booking {
   _id: string;
   user: { name: string };
   services: Array<{ name: string }>;
-  timeSlot: string;
+  timeSlot?: string;
+  scheduledDate?: Date | string;
   status: string;
   address: { city: string };
 }
