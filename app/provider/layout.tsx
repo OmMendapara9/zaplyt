@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 import { useEffect } from "react";
+import Logo from "@/components/Logo";
 import {
   LayoutDashboard,
   Calendar,
@@ -46,7 +47,13 @@ export default function ProviderLayout({
 
   return (
     <div className="min-h-screen bg-background">
-      {children}
+      <header className="sticky top-0 z-50 border-b border-border bg-background/90 px-4 py-3 backdrop-blur">
+        <div className="max-w-md mx-auto">
+          <Logo />
+        </div>
+      </header>
+
+      <main className="px-4 pt-3 pb-24 max-w-md mx-auto">{children}</main>
 
       {/* Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-card border-t border-border z-50">
