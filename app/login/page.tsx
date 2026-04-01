@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ChevronLeft, Phone } from "lucide-react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
+import Logo from "@/components/Logo";
 
 export default function LoginPage() {
   const [phone, setPhone] = useState("");
@@ -48,6 +49,9 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <div className="p-4">
+        <Logo />
+      </div>
       {/* Header */}
       <div className="p-4">
         <Link

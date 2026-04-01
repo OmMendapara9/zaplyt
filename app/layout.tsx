@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { Toaster } from "@/components/ui/toaster";
+import Logo from "@/components/Logo";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -34,7 +35,12 @@ export default function RootLayout({
         <AuthProvider>
           <CartProvider>
             <div className="mx-auto max-w-md min-h-screen bg-background">
-              {children}
+              <header className="sticky top-0 z-50 border-b border-border bg-background/90 py-3 backdrop-blur">
+                <div className="px-4">
+                  <Logo />
+                </div>
+              </header>
+              <main className="px-4 pb-8">{children}</main>
             </div>
             <Toaster />
           </CartProvider>
