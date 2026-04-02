@@ -14,14 +14,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
 const categories = [
-  { id: "salon-women", name: "Salon for Women", icon: "💇‍♀️", color: "bg-pink-50 border-pink-200 hover:bg-pink-100", services: "120+ services", gradient: "from-pink-400 to-rose-500" },
-  { id: "salon-men", name: "Salon for Men", icon: "💇‍♂️", color: "bg-blue-50 border-blue-200 hover:bg-blue-100", services: "80+ services", gradient: "from-blue-400 to-cyan-500" },
-  { id: "ac-service", name: "AC Service", icon: "❄️", color: "bg-cyan-50 border-cyan-200 hover:bg-cyan-100", services: "50+ services", gradient: "from-cyan-400 to-blue-500" },
-  { id: "cleaning", name: "Cleaning", icon: "🧹", color: "bg-green-50 border-green-200 hover:bg-green-100", services: "90+ services", gradient: "from-green-400 to-emerald-500" },
-  { id: "electrician", name: "Electrician", icon: "⚡", color: "bg-yellow-50 border-yellow-200 hover:bg-yellow-100", services: "70+ services", gradient: "from-yellow-400 to-orange-500" },
-  { id: "plumber", name: "Plumber", icon: "🔧", color: "bg-indigo-50 border-indigo-200 hover:bg-indigo-100", services: "60+ services", gradient: "from-indigo-400 to-purple-500" },
-  { id: "appliance", name: "Appliance Repair", icon: "🔌", color: "bg-orange-50 border-orange-200 hover:bg-orange-100", services: "85+ services", gradient: "from-orange-400 to-red-500" },
-  { id: "painter", name: "Painter", icon: "🎨", color: "bg-purple-50 border-purple-200 hover:bg-purple-100", services: "40+ services", gradient: "from-purple-400 to-pink-500" },
+  { id: "salon-women", name: "Salon for Women", icon: "💇‍♀️", color: "bg-gradient-to-br from-blue-50 to-purple-50 border-blue-100 hover:shadow-lg", services: "120+ services", gradient: "from-blue-500 via-purple-500 to-green-500" },
+  { id: "salon-men", name: "Salon for Men", icon: "💇‍♂️", color: "bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-100 hover:shadow-lg", services: "80+ services", gradient: "from-blue-500 via-purple-500 to-green-500" },
+  { id: "ac-service", name: "AC Service", icon: "❄️", color: "bg-gradient-to-br from-purple-50 to-green-50 border-purple-100 hover:shadow-lg", services: "50+ services", gradient: "from-blue-500 via-purple-500 to-green-500" },
+  { id: "cleaning", name: "Cleaning", icon: "🧹", color: "bg-gradient-to-br from-green-50 to-blue-50 border-green-100 hover:shadow-lg", services: "90+ services", gradient: "from-blue-500 via-purple-500 to-green-500" },
+  { id: "electrician", name: "Electrician", icon: "⚡", color: "bg-gradient-to-br from-yellow-50 to-orange-50 border-yellow-100 hover:shadow-lg", services: "70+ services", gradient: "from-blue-500 via-purple-500 to-green-500" },
+  { id: "plumber", name: "Plumber", icon: "🔧", color: "bg-gradient-to-br from-indigo-50 to-purple-50 border-indigo-100 hover:shadow-lg", services: "60+ services", gradient: "from-blue-500 via-purple-500 to-green-500" },
+  { id: "appliance", name: "Appliance Repair", icon: "🔌", color: "bg-gradient-to-br from-orange-50 to-red-50 border-orange-100 hover:shadow-lg", services: "85+ services", gradient: "from-blue-500 via-purple-500 to-green-500" },
+  { id: "painter", name: "Painter", icon: "🎨", color: "bg-gradient-to-br from-purple-50 to-pink-50 border-purple-100 hover:shadow-lg", services: "40+ services", gradient: "from-blue-500 via-purple-500 to-green-500" },
 ];
 
 const featuredWorkers = [
@@ -32,6 +32,7 @@ const featuredWorkers = [
     rating: 4.9,
     reviews: 234,
     experience: "5 years",
+    price: "₹299",
     image: "/images/worker1.jpg",
     verified: true,
     badge: "Top Rated",
@@ -43,6 +44,7 @@ const featuredWorkers = [
     rating: 4.8,
     reviews: 189,
     experience: "7 years",
+    price: "₹499",
     image: "/images/worker2.jpg",
     verified: true,
     badge: "Expert",
@@ -54,6 +56,7 @@ const featuredWorkers = [
     rating: 4.9,
     reviews: 312,
     experience: "4 years",
+    price: "₹199",
     image: "/images/worker3.jpg",
     verified: true,
     badge: "Verified",
@@ -158,25 +161,25 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-[#F8FAFC] overflow-x-hidden">
       {/* Animated Background Elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <motion.div
           animate={{
             scale: [1, 1.2, 1],
-            opacity: [0.1, 0.2, 0.1],
+            opacity: [0.05, 0.08, 0.05],
           }}
           transition={{
             duration: 8,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="absolute top-20 right-10 w-32 h-32 bg-primary/10 rounded-full blur-xl"
+          className="absolute top-20 right-10 w-32 h-32 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-xl"
         />
         <motion.div
           animate={{
             scale: [1.2, 1, 1.2],
-            opacity: [0.1, 0.15, 0.1],
+            opacity: [0.05, 0.07, 0.05],
           }}
           transition={{
             duration: 6,
@@ -184,7 +187,7 @@ export default function HomePage() {
             ease: "easeInOut",
             delay: 2,
           }}
-          className="absolute bottom-40 left-10 w-24 h-24 bg-success/10 rounded-full blur-xl"
+          className="absolute bottom-40 left-10 w-24 h-24 bg-gradient-to-br from-purple-200/20 to-green-200/20 rounded-full blur-xl"
         />
       </div>
 
@@ -193,7 +196,7 @@ export default function HomePage() {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ type: "spring", stiffness: 100, damping: 20 }}
-        className="bg-card/80 backdrop-blur-lg border-b border-border px-4 pt-4 pb-6 sticky top-0 z-40"
+        className="bg-white/80 backdrop-blur-lg border-b border-gray-100 px-4 pt-4 pb-6 sticky top-0 z-40 shadow-sm"
       >
         {/* Location */}
         <div className="flex items-center justify-between mb-4">
@@ -209,29 +212,28 @@ export default function HomePage() {
               <MapPin className="w-5 h-5 text-primary" />
             </motion.div>
             <div className="text-left">
-              <p className="text-xs text-muted-foreground">Current Location</p>
-              <p className="font-medium text-sm truncate max-w-[200px] group-hover:text-primary transition-colors">
+              <p className="text-xs text-[#64748B]">Current Location</p>
+              <p className="font-medium text-sm truncate max-w-[200px] group-hover:text-[#0F172A] transition-colors">
                 {defaultAddress?.address || "Select Address"}
               </p>
             </div>
-            <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
+            <ChevronRight className="w-4 h-4 text-[#64748B] group-hover:text-[#0F172A] transition-colors" />
           </motion.button>
 
-          {/* Cart */}
           <Link href="/booking/summary">
             <motion.div
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              className="relative p-2 bg-primary/10 hover:bg-primary/20 rounded-full transition-colors"
+              className="relative p-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl"
             >
-              <ShoppingCart className="w-5 h-5 text-primary" />
+              <ShoppingCart className="w-5 h-5 text-white" />
               <AnimatePresence>
                 {totalItems > 0 && (
                   <motion.span
                     initial={{ scale: 0, rotate: -180 }}
                     animate={{ scale: 1, rotate: 0 }}
                     exit={{ scale: 0, rotate: 180 }}
-                    className="absolute -top-1 -right-1 w-5 h-5 bg-success text-success-foreground text-xs font-bold rounded-full flex items-center justify-center"
+                    className="absolute -top-1 -right-1 w-5 h-5 bg-white text-[#0F172A] text-xs font-bold rounded-full flex items-center justify-center shadow-md"
                   >
                     {totalItems}
                   </motion.span>
@@ -255,7 +257,7 @@ export default function HomePage() {
             onChange={(e) => setSearchQuery(e.target.value)}
             onFocus={() => setIsSearchFocused(true)}
             onBlur={() => setIsSearchFocused(false)}
-            className="pl-12 h-12 bg-muted/50 border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-300"
+            className="pl-12 h-12 bg-white border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300 shadow-sm"
           />
         </motion.div>
       </motion.header>
@@ -263,7 +265,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <motion.section
         style={{ y }}
-        className="relative px-4 py-12 bg-gradient-to-br from-primary/5 via-background to-success/5 overflow-hidden"
+        className="relative px-4 py-16 bg-gradient-to-br from-blue-50 via-purple-50 to-green-50 overflow-hidden"
       >
         {/* Floating Elements */}
         <div className="absolute inset-0 pointer-events-none">
@@ -288,9 +290,9 @@ export default function HomePage() {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
-            className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6"
+            className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm text-[#0F172A] px-4 py-2 rounded-full text-sm font-medium mb-6 shadow-sm border border-gray-100"
           >
-            <Sparkles className="w-4 h-4" />
+            <Sparkles className="w-4 h-4 text-blue-500" />
             Trusted by 50,000+ customers
           </motion.div>
 
@@ -298,14 +300,14 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
-            className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight"
+            className="text-4xl md:text-5xl font-bold text-[#0F172A] mb-6 leading-tight"
           >
             Professional Services
             <motion.span
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.8 }}
-              className="block text-primary"
+              className="block bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent"
             >
               At Your Doorstep
             </motion.span>
@@ -315,7 +317,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9 }}
-            className="text-muted-foreground mb-8 text-lg"
+            className="text-[#64748B] mb-8 text-lg"
           >
             Book verified professionals for all your home and beauty needs with just a few taps
           </motion.p>
@@ -326,7 +328,7 @@ export default function HomePage() {
             transition={{ delay: 1.0 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-4 group">
+            <Button size="lg" className="bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 hover:from-blue-600 hover:via-purple-600 hover:to-green-600 text-white text-lg px-8 py-4 group shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
               <motion.span
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 400 }}
@@ -335,7 +337,7 @@ export default function HomePage() {
               </motion.span>
               <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button size="lg" variant="outline" className="text-lg px-8 py-4">
+            <Button size="lg" variant="outline" className="text-lg px-8 py-4 border-gray-200 text-[#0F172A] hover:bg-white hover:shadow-lg transition-all duration-300 transform hover:scale-105">
               <motion.span
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 400 }}
@@ -360,19 +362,19 @@ export default function HomePage() {
           className="flex justify-center gap-8 flex-wrap"
         >
           {[
-            { icon: Shield, label: "Verified Pros", color: "text-green-500" },
-            { icon: Clock, label: "On-time Service", color: "text-blue-500" },
-            { icon: Award, label: "Quality Assured", color: "text-purple-500" },
+            { icon: Shield, label: "Verified Pros", color: "text-blue-500" },
+            { icon: Clock, label: "On-time Service", color: "text-purple-500" },
+            { icon: Award, label: "Quality Assured", color: "text-green-500" },
             { icon: Heart, label: "100% Satisfaction", color: "text-red-500" },
           ].map((item, index) => (
             <motion.div
               key={item.label}
               variants={itemVariants}
               whileHover={{ scale: 1.1, y: -5 }}
-              className="flex items-center gap-2 bg-card px-4 py-3 rounded-xl border border-border shadow-sm"
+              className="flex items-center gap-2 bg-white px-4 py-3 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
             >
               <item.icon className={`w-5 h-5 ${item.color}`} />
-              <span className="text-sm font-medium text-foreground">{item.label}</span>
+              <span className="text-sm font-medium text-[#0F172A]">{item.label}</span>
             </motion.div>
           ))}
         </motion.div>
@@ -387,8 +389,8 @@ export default function HomePage() {
         className="px-4 py-8"
       >
         <motion.div variants={itemVariants} className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-foreground mb-2">Browse Categories</h2>
-          <p className="text-muted-foreground">Find the perfect service for your needs</p>
+          <h2 className="text-2xl font-bold text-[#0F172A] mb-2">Browse Categories</h2>
+          <p className="text-[#64748B]">Find the perfect service for your needs</p>
         </motion.div>
 
         <motion.div
@@ -404,7 +406,7 @@ export default function HomePage() {
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
               <Link href={`/services/${category.id}`}>
-                <Card className={`${category.color} border-2 hover:shadow-xl transition-all duration-500 group overflow-hidden relative`}>
+                <Card className={`${category.color} border-2 hover:shadow-xl transition-all duration-500 group overflow-hidden relative transform hover:scale-105`}>
                   <div className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
                   <CardContent className="p-4 relative z-10">
                     <motion.div
@@ -420,10 +422,10 @@ export default function HomePage() {
                         {category.icon}
                       </motion.div>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-foreground text-sm group-hover:text-primary transition-colors">
+                        <h3 className="font-semibold text-[#0F172A] text-sm group-hover:text-blue-600 transition-colors">
                           {category.name}
                         </h3>
-                        <p className="text-xs text-muted-foreground">{category.services}</p>
+                        <p className="text-xs text-[#64748B]">{category.services}</p>
                       </div>
                     </motion.div>
                   </CardContent>
@@ -440,11 +442,11 @@ export default function HomePage() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="px-4 py-8 bg-muted/30"
+        className="px-4 py-8 bg-white"
       >
         <motion.div variants={itemVariants} className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-foreground mb-2">Featured Professionals</h2>
-          <p className="text-muted-foreground">Meet our top-rated service providers</p>
+          <h2 className="text-2xl font-bold text-[#0F172A] mb-2">Featured Professionals</h2>
+          <p className="text-[#64748B]">Meet our top-rated service providers</p>
         </motion.div>
 
         <motion.div variants={containerVariants} className="space-y-4">
@@ -455,15 +457,15 @@ export default function HomePage() {
               whileHover={{ scale: 1.02, x: 10 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
-              <Card className="hover:shadow-xl transition-all duration-500 group overflow-hidden">
-                <CardContent className="p-4">
+              <Card className="hover:shadow-xl transition-all duration-500 group overflow-hidden bg-white border border-gray-100 transform hover:scale-105 hover:shadow-2xl">
+                <CardContent className="p-6">
                   <div className="flex items-center gap-4">
                     <motion.div
                       className="relative"
                       whileHover={{ scale: 1.1 }}
                       transition={{ type: "spring", stiffness: 400 }}
                     >
-                      <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-success/20 rounded-full flex items-center justify-center text-2xl border-2 border-primary/20">
+                      <div className="w-16 h-16 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center text-2xl border-2 border-gray-100">
                         👤
                       </div>
                       {worker.verified && (
@@ -472,7 +474,7 @@ export default function HomePage() {
                           animate={{ scale: 1 }}
                           transition={{ delay: 0.5 + index * 0.1, type: "spring", stiffness: 500 }}
                         >
-                          <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-success bg-background rounded-full border-2 border-background" />
+                          <CheckCircle className="absolute -bottom-1 -right-1 w-5 h-5 text-green-500 bg-white rounded-full border-2 border-white shadow-sm" />
                         </motion.div>
                       )}
                       {worker.badge && (
@@ -482,26 +484,27 @@ export default function HomePage() {
                           transition={{ delay: 0.7 + index * 0.1 }}
                           className="absolute -top-2 -right-2"
                         >
-                          <Badge className="bg-primary text-primary-foreground text-xs">
+                          <Badge className="bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs shadow-sm">
                             {worker.badge}
                           </Badge>
                         </motion.div>
                       )}
                     </motion.div>
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                      <div className="flex items-center justify-between mb-1">
+                        <h3 className="font-semibold text-[#0F172A] group-hover:text-blue-600 transition-colors">
                           {worker.name}
                         </h3>
+                        <span className="text-lg font-bold text-[#0F172A]">{worker.price}</span>
                       </div>
-                      <p className="text-sm text-muted-foreground mb-1">{worker.specialty}</p>
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                      <p className="text-sm text-[#64748B] mb-2">{worker.specialty}</p>
+                      <div className="flex items-center gap-4 text-xs text-[#64748B]">
                         <motion.div
                           className="flex items-center gap-1"
                           whileHover={{ scale: 1.1 }}
                         >
                           <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-                          <span className="font-medium">{worker.rating}</span>
+                          <span className="font-medium text-[#0F172A]">{worker.rating}</span>
                           <span>({worker.reviews})</span>
                         </motion.div>
                         <span>{worker.experience}</span>
@@ -511,7 +514,7 @@ export default function HomePage() {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <Button size="sm" variant="outline" className="group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                      <Button size="sm" className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white shadow-md hover:shadow-lg transition-all duration-300">
                         Book
                       </Button>
                     </motion.div>
@@ -532,8 +535,8 @@ export default function HomePage() {
         className="px-4 py-12"
       >
         <motion.div variants={itemVariants} className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-foreground mb-2">What Our Customers Say</h2>
-          <p className="text-muted-foreground">Real experiences from satisfied customers</p>
+          <h2 className="text-2xl font-bold text-[#0F172A] mb-2">What Our Customers Say</h2>
+          <p className="text-[#64748B]">Real experiences from satisfied customers</p>
         </motion.div>
 
         <div className="max-w-2xl mx-auto">
@@ -546,7 +549,7 @@ export default function HomePage() {
               transition={{ type: "spring", stiffness: 300, damping: 30 }}
               className="text-center"
             >
-              <Card className="bg-gradient-to-br from-primary/5 to-success/5 border-primary/20">
+              <Card className="bg-gradient-to-br from-white to-gray-50 border border-gray-100 shadow-lg">
                 <CardContent className="p-6">
                   <motion.div
                     initial={{ scale: 0 }}
@@ -569,7 +572,7 @@ export default function HomePage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 }}
-                    className="text-foreground italic text-lg mb-4"
+                    className="text-[#0F172A] italic text-lg mb-4"
                   >
                     "{testimonials[currentTestimonial].comment}"
                   </motion.p>
@@ -579,12 +582,12 @@ export default function HomePage() {
                     transition={{ delay: 0.7 }}
                     className="flex items-center justify-center gap-3"
                   >
-                    <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center text-xl">
+                    <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center text-xl border-2 border-gray-100">
                       👤
                     </div>
                     <div className="text-left">
-                      <h4 className="font-semibold text-foreground">{testimonials[currentTestimonial].name}</h4>
-                      <p className="text-sm text-muted-foreground">{testimonials[currentTestimonial].location}</p>
+                      <h4 className="font-semibold text-[#0F172A]">{testimonials[currentTestimonial].name}</h4>
+                      <p className="text-sm text-[#64748B]">{testimonials[currentTestimonial].location}</p>
                     </div>
                   </motion.div>
                 </CardContent>
@@ -619,11 +622,11 @@ export default function HomePage() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
-        className="px-4 py-12 bg-gradient-to-r from-primary/5 via-success/5 to-primary/5"
+        className="px-4 py-12 bg-gradient-to-r from-blue-50 via-purple-50 to-green-50"
       >
         <motion.div variants={itemVariants} className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-foreground mb-2">Trusted by Thousands</h2>
-          <p className="text-muted-foreground">Join our growing community of satisfied customers</p>
+          <h2 className="text-2xl font-bold text-[#0F172A] mb-2">Trusted by Thousands</h2>
+          <p className="text-[#64748B]">Join our growing community of satisfied customers</p>
         </motion.div>
 
         <motion.div
@@ -649,7 +652,7 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 + index * 0.1 }}
-                className="text-3xl font-bold text-foreground mb-1"
+                className="text-3xl font-bold text-[#0F172A] mb-1"
               >
                 {stat.value}
               </motion.div>
@@ -657,7 +660,7 @@ export default function HomePage() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 + index * 0.1 }}
-                className="text-sm text-muted-foreground"
+                className="text-sm text-[#64748B]"
               >
                 {stat.label}
               </motion.div>
@@ -680,17 +683,17 @@ export default function HomePage() {
           transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
           className="max-w-md mx-auto"
         >
-          <h2 className="text-2xl font-bold text-foreground mb-4">
+          <h2 className="text-2xl font-bold text-[#0F172A] mb-4">
             Ready to Get Started?
           </h2>
-          <p className="text-muted-foreground mb-6">
+          <p className="text-[#64748B] mb-6">
             Download our app and experience premium home services like never before
           </p>
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Button size="lg" className="bg-primary hover:bg-primary/90 px-8 py-4 text-lg">
+            <Button size="lg" className="bg-gradient-to-r from-blue-500 via-purple-500 to-green-500 hover:from-blue-600 hover:via-purple-600 hover:to-green-600 text-white px-8 py-4 text-lg shadow-lg hover:shadow-xl transition-all duration-300">
               <Zap className="w-5 h-5 mr-2" />
               Get Started Now
             </Button>

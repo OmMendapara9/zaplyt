@@ -34,14 +34,7 @@ export default function RootLayout({
       <body className={`${inter.variable} font-sans`}>
         <AuthProvider>
           <CartProvider>
-            <div className="mx-auto max-w-md min-h-screen bg-background">
-              <header className="sticky top-0 z-50 border-b border-border bg-background/90 py-3 backdrop-blur">
-                <div className="px-4">
-                  <Logo />
-                </div>
-              </header>
-              <main className="px-4 pb-8">{children}</main>
-            </div>
+            {children}
             <Toaster />
           </CartProvider>
         </AuthProvider>
