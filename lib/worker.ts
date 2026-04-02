@@ -1,12 +1,10 @@
-import * as AgendaLib from 'agenda';
+import { Agenda } from 'agenda';
 import mongoose from 'mongoose';
 import Booking from '../models/Booking';
 import Provider from '../models/Provider';
 import Service from '../models/Service';
 import User from '../models/User';
 import { notifyProvider, notifyUser } from './notifications';
-
-const Agenda = AgendaLib.default || AgendaLib;
 
 // Ensure MongoDB is connected
 const MONGODB_URI = process.env.MONGODB_URI;
