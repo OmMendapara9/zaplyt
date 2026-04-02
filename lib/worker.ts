@@ -1,9 +1,9 @@
 import Agenda from 'agenda';
 import mongoose from 'mongoose';
-import { Booking } from '../models/Booking';
-import { Provider } from '../models/Provider';
-import { Service } from '../models/Service';
-import { User } from '../models/User';
+import Booking from '../models/Booking';
+import Provider from '../models/Provider';
+import Service from '../models/Service';
+import User from '../models/User';
 import { notifyProvider, notifyUser } from './notifications';
 
 // Ensure MongoDB is connected
