@@ -1,33 +1,36 @@
-import { Agenda } from 'agenda';
 import mongoose from 'mongoose';
+import { connectToDatabase } from './mongodb';
 import Booking from '../models/Booking';
 import Provider from '../models/Provider';
-import Service from '../models/Service';
 import User from '../models/User';
 import { notifyProvider, notifyUser } from './notifications';
 
-// Ensure MongoDB is connected
-const MONGODB_URI = process.env.MONGODB_URI;
-if (!MONGODB_URI) {
-  throw new Error('MONGODB_URI is not defined');
-}
-
-// Create Agenda instance
-const agenda = new Agenda({
-  db: { address: MONGODB_URI, collection: 'agendaJobs' },
-  processEvery: '10 seconds', // Check for jobs every 10 seconds
-  maxConcurrency: 5, // Max concurrent jobs
+// Job collection schema
+const jobSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  data: mongoose.Schema.Types.Mixed,
+  nextRunAt: { type: Date, default: new Date() },
+  failCount: { type: Number, default: 0 },
+  processed: { type: Boolean, default: false },
+  createdAt: { type: Date, default: Date.now },
 });
 
-// Define job: assign-booking
-agenda.define('assign-booking', async (job) => {
-  const { bookingId } = job.attrs.data;
+const JobQueue = mongoose.models.JobQueue || mongoose.model('JobQueue', jobSchema);
+
+// Job handlers
+const jobHandlers: { [key: string]: (data: any) => Promise<void> } = {
+  'assign-booking': assignBooking,
+};
+
+async function assignBooking(data: any) {
+  const { bookingId } = data;
 
   try {
     const booking = await Booking.findById(bookingId).populate('userId').populate({
       path: 'services.serviceId',
       model: 'Service'
     });
+
     if (!booking) {
       console.error(`Booking ${bookingId} not found`);
       return;
@@ -41,29 +44,27 @@ agenda.define('assign-booking', async (job) => {
     // Get service IDs from booking
     const serviceIds = booking.services.map(s => (s.serviceId as any)._id || s.serviceId);
 
-    // Find available providers in the same city, offering the services
+    // Find available providers in the same city
     const providers = await Provider.find({
       isAvailable: true,
       'location.city': booking.address.city,
       services: { $in: serviceIds },
     })
       .populate('userId')
-      .sort({ rating: -1, totalBookings: -1 }) // Prioritize higher rating and experience
-      .limit(5); // Get top 5 candidates
+      .sort({ rating: -1, totalBookings: -1 })
+      .limit(5);
 
     if (providers.length === 0) {
       console.log(`No available providers for booking ${bookingId}`);
-      // Could schedule a retry or notify user
       return;
     }
 
-    // For simplicity, assign to the first (best) provider
+    // Assign to best provider
     const selectedProvider = providers[0];
     booking.providerId = selectedProvider._id;
     booking.status = 'accepted';
     await booking.save();
 
-    // Update provider stats
     selectedProvider.totalBookings += 1;
     await selectedProvider.save();
 
@@ -77,65 +78,90 @@ agenda.define('assign-booking', async (job) => {
   } catch (error) {
     console.error('Error in assign-booking job:', error);
   }
-});
+}
 
-// Define job: expire-bookings
-agenda.define('expire-bookings', async (job) => {
+async function expireBookings() {
   try {
-    const expiredBookings = await Booking.updateMany(
+    const result = await Booking.updateMany(
       {
         status: 'pending',
-        createdAt: { $lt: new Date(Date.now() - 15 * 60 * 1000) }, // Older than 15 minutes
+        createdAt: { $lt: new Date(Date.now() - 15 * 60 * 1000) },
       },
       { status: 'cancelled', cancellationReason: 'Expired due to no acceptance' }
     );
 
-    console.log(`Expired ${expiredBookings.modifiedCount} bookings`);
+    console.log(`Expired ${result.modifiedCount} bookings`);
   } catch (error) {
-    console.error('Error in expire-bookings job:', error);
+    console.error('Error expiring bookings:', error);
   }
-});
+}
 
-// Define job: cleanup-data
-agenda.define('cleanup-data', async (job) => {
+async function cleanupData() {
   try {
-    // Clean bookings older than 30 days that are cancelled or completed
-    const oldBookings = await Booking.deleteMany({
+    const result = await Booking.deleteMany({
       status: { $in: ['cancelled', 'completed'] },
       createdAt: { $lt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) },
     });
 
-    console.log(`Cleaned up ${oldBookings.deletedCount} old bookings`);
-
-    // Update provider availability (simple refresh)
-    // For now, just log
-    console.log('Refreshed provider availability');
+    console.log(`Cleaned up ${result.deletedCount} old bookings`);
   } catch (error) {
-    console.error('Error in cleanup-data job:', error);
+    console.error('Error cleaning data:', error);
   }
-});
+}
 
-// Start the agenda
-export const startWorker = async () => {
-  await agenda.start();
-  console.log('Worker system started');
+async function processJobs() {
+  try {
+    const job = await JobQueue.findOne({ processed: false, nextRunAt: { $lte: new Date() } });
 
-  // Schedule recurring jobs
-  await agenda.every('10 minutes', 'expire-bookings');
-  await agenda.every('1 day', 'cleanup-data');
-};
+    if (job) {
+      const handler = jobHandlers[job.name];
+      if (handler) {
+        await handler(job.data);
+      }
+      job.processed = true;
+      await job.save();
+      console.log(`Processed job: ${job.name}`);
+    }
+  } catch (error) {
+    console.error('Error processing job:', error);
+  }
+}
+
+export async function startWorker() {
+  try {
+    await connectToDatabase();
+    console.log('Worker system started');
+
+    // Process jobs every 5 seconds
+    setInterval(processJobs, 5000);
+
+    // Expire bookings every 10 minutes
+    setInterval(expireBookings, 10 * 60 * 1000);
+
+    // Cleanup every day
+    setInterval(cleanupData, 24 * 60 * 60 * 1000);
+  } catch (error) {
+    console.error('Error starting worker:', error);
+    process.exit(1);
+  }
+}
 
 // Graceful shutdown
 process.on('SIGTERM', async () => {
-  await agenda.stop();
+  console.log('Shutting down worker...');
   await mongoose.connection.close();
   process.exit(0);
 });
 
 process.on('SIGINT', async () => {
-  await agenda.stop();
+  console.log('Shutting down worker...');
   await mongoose.connection.close();
   process.exit(0);
 });
 
-export { agenda };
+// Start worker if this file is run directly
+if (require.main === module) {
+  startWorker();
+}
+
+export { JobQueue };

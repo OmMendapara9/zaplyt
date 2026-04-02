@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/lib/mongodb";
 import Booking from "@/models/Booking";
 import { getSession } from "@/lib/auth";
-import { agenda } from "@/lib/worker";
+import { enqueueJob } from "@/lib/jobs";
 
 export async function GET(request: NextRequest) {
   try {
@@ -73,7 +73,7 @@ export async function POST(request: NextRequest) {
     await booking.save();
 
     // Schedule worker to assign booking
-    await agenda.now('assign-booking', { bookingId: booking._id });
+    await enqueueJob('assign-booking', { bookingId: booking._id });
 
     return NextResponse.json({ booking }, { status: 201 });
   } catch (error) {
