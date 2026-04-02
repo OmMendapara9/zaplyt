@@ -5,6 +5,7 @@ import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { Toaster } from "@/components/ui/toaster";
 import Logo from "@/components/Logo";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({
             <Toaster />
           </CartProvider>
         </AuthProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
